@@ -1,0 +1,36 @@
+{
+	"chain":[
+						{
+							"id":0,
+							"uart" : 0,
+							"plug" : 0,
+							"reset":0	
+						},
+						{
+							"id":1,
+							"uart" : 0,
+							"plug" : 0,
+							"reset":0	
+						},
+						{
+							"id":2,
+							"uart" : 0,
+							"plug" : 0,
+							"reset":0
+						},
+						{
+							"id":3,
+							"uart" : 0,
+							"plug" : 0,
+							"reset":0
+						}
+		],
+		"red":941,
+		"green":942,
+		"reset":921,
+		"ipreport":943,
+		"fan":[
+						{"id": 0,"name":0, "max":6000},
+						{"id":1,"name":0, "max":4300}
+		]		
+}

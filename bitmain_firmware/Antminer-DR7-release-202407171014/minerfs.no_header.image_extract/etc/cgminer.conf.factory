@@ -1,0 +1,27 @@
+{
+    "pools" : [
+    {
+	    "url" : "",
+	    "user" : "",
+	    "pass" : ""
+    },
+    {
+	    "url" : "",
+	    "user" : "",
+	    "pass" : ""
+    },
+    {
+	    "url" : "",
+	    "user" : "",
+	    "pass" : ""
+    }
+    ],
+
+	"algo" : "dcr_1727",
+	"bitmain-fan-ctrl" : false,
+	"bitmain-fan-pwm" : "100",
+	"bitmain-freq" : "0",
+	"bitmain-voltage" : "0",
+	"bitmain-work-mode" : "0",
+	"bitmain-freq-level" : "100"
+}

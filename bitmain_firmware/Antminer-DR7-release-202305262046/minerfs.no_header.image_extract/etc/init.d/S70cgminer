@@ -1,0 +1,108 @@
+#!/bin/sh
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=/usr/bin/godminer
+NAME=godminer
+DESC="Godminer daemon"
+
+set -e
+#set -x
+test -x "$DAEMON" || exit 0
+
+# RED LED: GPIO941
+if [ ! -d /sys/class/gpio/gpio941 ]; then
+    echo 941 > /sys/class/gpio/export
+    echo out > /sys/class/gpio/gpio941/direction
+    echo 0 > /sys/class/gpio/gpio941/value
+fi
+
+# GREEN LED: GPIO942
+if [ ! -d /sys/class/gpio/gpio942 ]; then
+    echo 942 > /sys/class/gpio/export
+    echo out > /sys/class/gpio/gpio942/direction
+    echo 0 > /sys/class/gpio/gpio942/value
+fi
+
+# LCD: D0 : CS
+if [ ! -d /sys/class/gpio/gpio954 ]; then
+    echo 954 > /sys/class/gpio/export
+    echo out > /sys/class/gpio/gpio954/direction
+    echo 0 > /sys/class/gpio/gpio954/value
+fi
+
+# LCD: D0 : SID
+if [ ! -d /sys/class/gpio/gpio955 ]; then
+    echo 955 > /sys/class/gpio/export
+    echo out > /sys/class/gpio/gpio955/direction
+    echo 0 > /sys/class/gpio/gpio955/value
+fi
+
+# LCD: D0 : SCLK
+if [ ! -d /sys/class/gpio/gpio958 ]; then
+    echo 958 > /sys/class/gpio/export
+    echo out > /sys/class/gpio/gpio958/direction
+    echo 0 > /sys/class/gpio/gpio958/value
+fi
+
+# LCD: D0 : RESET
+if [ ! -d /sys/class/gpio/gpio959 ]; then
+    echo 959 > /sys/class/gpio/export
+    echo out > /sys/class/gpio/gpio959/direction
+    echo 0 > /sys/class/gpio/gpio959/value
+fi
+
+do_start() {
+    sleep 5s
+    if [ -z  "`lsmod | grep bitmain_axi`"  ]; then
+        echo "No bitmain_axi.ko"                                 
+        insmod /lib/modules/bitmain_axi.ko
+        memory_size=`awk '/MemTotal/{total=$2}END{print total}' /proc/meminfo`
+        echo memory_size = $memory_size                                       
+        if [ $memory_size -gt 1000000 ]; then
+            echo "fpga_mem_offset_addr=0x3F000000"                            
+            insmod /lib/modules/fpga_mem_driver.ko fpga_mem_offset_addr=0x3F000000
+        elif [ $memory_size -lt 1000000 -a  $memory_size -gt 400000 ]; then
+            echo "fpga_mem_offset_addr=0x1F000000"                                
+            insmod /lib/modules/fpga_mem_driver.ko fpga_mem_offset_addr=0x1F000000
+        else
+            echo "fpga_mem_offset_addr=0x0F000000"                                
+            insmod /lib/modules/fpga_mem_driver.ko fpga_mem_offset_addr=0x0F000000
+        fi
+    else
+        echo "Have bitmain-axi"                                                   
+    fi
+
+    PARAMS="--version /usr/bin/compile_time"
+    echo PARAMS = $PARAMS
+    start-stop-daemon -b --start --exec $DAEMON -- $PARAMS --config /config/cgminer.conf --api-remote
+}
+
+do_stop() {
+    start-stop-daemon --stop --exec $DAEMON || true
+}
+
+case "$1" in
+  start)
+        echo -n "Starting $DESC: "
+        do_start
+        echo "$NAME."
+        ;;
+  stop)
+        echo -n "Stopping $DESC: "
+        do_stop
+        echo "$NAME."
+        ;;
+  restart|force-reload)
+        echo -n "Restarting $DESC: "
+        do_stop
+        do_start
+        echo "$NAME."
+        ;;
+  *)
+        N=/etc/init.d/$NAME
+        echo "Usage: $N {start|stop|restart|force-reload}" >&2
+        exit 1
+        ;;
+esac
+
+exit 0

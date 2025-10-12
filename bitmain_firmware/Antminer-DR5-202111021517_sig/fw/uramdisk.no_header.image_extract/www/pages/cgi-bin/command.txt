@@ -1,0 +1,50 @@
+ 2183  git diff
+ 2184  make
+ 2185  cd ..
+ 2186  ls
+ 2187  rm cgminer-dcr -rf
+ 2188  rm cgminer-dcr.tar.bz2
+ 2189  cp cgminer-dcr-new-without-x.tar.bz2 cgminer-dcr.tar.bz2
+ 2190  md5sum *
+ 2191  ls
+ 2192  ll
+ 2193  sudo chown biysh:biysh *
+ 2194  ll
+ 2195  rm cgminer-dcr.tar.bz2
+ 2196  cp cgminer-dcr-108asics-test.tar.bz2 cgminer-dcr.tar.bz2
+ 2197  git status
+ 2198  md5sum *
+ 2199  git diff
+ 2200  ls
+ 2201  cd ..
+ 2202  ls
+ 2203  cd ../../
+ 2204  cd recipes-bitmianer/
+ 2205  ls
+ 2206  cd image/
+ 2207  ls
+ 2208  vim DCR.bb
+ 2209  cd ..
+ 2210  ls
+ 2211  cd cgminer/
+ 2212  ls
+ 2213  vim cgminer-dcr-test.bb
+ 2214  cd cgminer-dcr-test-1.0/
+ 2215  ls
+ 2216  cd ../..
+ 2217  ls
+ 2218  cd initscripts/
+ 2219  ls
+ 2220  vim initscripts_1.0.bbappend
+ 2221  cd ..
+ 2222  ls
+ 2223  cd lighttpd/
+ 2224  ls
+ 2225  cd lighttpd-1.0/
+ 2226  ls
+ 2227  cd www-dcr-1725
+ 2228  ls
+ 2229  cd cgi-bin/
+ 2230  ls
+ 2231  ls minerStatus.cgi 
+ 2232  history | tail -n 50 > command.txt

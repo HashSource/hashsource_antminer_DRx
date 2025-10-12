@@ -1,0 +1,6 @@
+#!/bin/sh
+
+run-postinsts
+
+echo "Begin recover Zynq7000 NAND"
+exec /etc/init.d/pgnand.sh

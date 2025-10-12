@@ -1,0 +1,13 @@
+Package: devmem2
+Version: 1.0-r7.1
+Description: devmem2 version 1.0-r7
+ Simple program to read/write from/to any location in memory.
+Section: base
+Priority: optional
+Maintainer: Angstrom Developers <angstrom-distro-devel@linuxtogo.org>
+License: GPLv2+
+Architecture: armv7ahf-vfp-neon
+OE: devmem2
+Homepage: unknown
+Depends: libc6 (>= 2.17)
+Source: http://www.lartmaker.nl/lartware/port/devmem2.c file://devmem2-fixups-2.patch;apply=yes;striplevel=0

@@ -1,0 +1,13 @@
+Package: cgminer-dcr-test
+Version: git0+964b664e66b69b043ff805a7e3522e5c0916a932-r1.0
+Description: cgminer-dcr-test version gitAUTOINC+964b664e66b69b043ff805a7e3522e5c0916a932-r1
+ Cgminer DR3 miner SW
+Section: base
+Priority: optional
+Maintainer: Angstrom Developers <angstrom-distro-devel@linuxtogo.org>
+License: CLOSED
+Architecture: armv7ahf-vfp-neon
+OE: cgminer-dcr-test
+Homepage: unknown
+Depends: libgcc1 (>= linaro-4.7), libtinfo5 (>= 5.9), libncurses5 (>= 5.9), libc6 (>= 2.17)
+Source: git://$(whoami)@10.14.11.1:29418/antminer/cgminer-dcr;protocol=ssh;branch=cgminer-dcr-init-commit

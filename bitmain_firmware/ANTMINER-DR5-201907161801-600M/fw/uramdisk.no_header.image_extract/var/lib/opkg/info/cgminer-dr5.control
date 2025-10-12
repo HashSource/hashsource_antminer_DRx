@@ -1,0 +1,13 @@
+Package: cgminer-dr5
+Version: git9+e01b19d2551bae3e27e2529b004aa60336c0a991-r1.0
+Description: cgminer-dr5 version gitAUTOINC+e01b19d2551bae3e27e2529b004aa60336c0a991-r1
+ Cgminer DR5 miner SW
+Section: base
+Priority: optional
+Maintainer: Angstrom Developers <angstrom-distro-devel@linuxtogo.org>
+License: CLOSED
+Architecture: armv7ahf-vfp-neon
+OE: cgminer-dr5
+Homepage: unknown
+Depends: libgcc1 (>= linaro-4.7), libtinfo5 (>= 5.9), libncurses5 (>= 5.9), libc6 (>= 2.17)
+Source: git://$(whoami)@10.14.11.1:29418/antminer/cgminer-dcr;protocol=ssh;branch=cgminer-dcr-1725
