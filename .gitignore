@@ -5,3 +5,9 @@
 *.id2
 *.nam
 *.til
+
+# Ghidra
+_ghidra_project
+_lib_copies
+symbols
+_decompile.log
