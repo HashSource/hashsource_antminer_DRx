@@ -31,6 +31,10 @@ READELF_TIMEOUT: Final = 5
 GHIDRA_PATH: Final = Path("/home/danielsokil/Downloads/ghidra_11.4.2_PUBLIC")
 ANALYZE_HEADLESS: Final = GHIDRA_PATH / "support" / "analyzeHeadless"
 
+RETDEC_PATH: Final = Path("/home/danielsokil/Lab/avast/retdec/retdec-install")
+RETDEC_DECOMPILER: Final = RETDEC_PATH / "bin" / "retdec-decompiler"
+RETDEC_OUTPUT_PATH: Final = Path("_binaries/_retdec")
+
 # Regex patterns
 SONAME_PATTERN: Final = re.compile(r"Library soname: \[([^\]]+)\]")
 NEEDED_PATTERN: Final = re.compile(r"Shared library: \[([^\]]+)\]")
@@ -85,6 +89,8 @@ class DecompileStats:
 
     executables_done: int = 0
     executables_failed: int = 0
+    retdec_done: int = 0
+    retdec_failed: int = 0
 
     @property
     def total_processed(self) -> int:
@@ -511,6 +517,119 @@ def import_to_ghidra(
             return False
 
 
+def format_c_file(c_file: Path) -> bool:
+    """Format a C file using clang-format.
+
+    Args:
+        c_file: Path to C file to format
+
+    Returns:
+        True if formatting succeeded, False otherwise
+    """
+    if not c_file.exists():
+        logging.warning(f"C file not found for formatting: {c_file}")
+        return False
+
+    try:
+        result = subprocess.run(
+            [
+                "clang-format",
+                "-style={BasedOnStyle: LLVM, IndentWidth: 4}",
+                "-i",
+                str(c_file),
+            ],
+            capture_output=True,
+            text=True,
+            timeout=30,
+            check=False,
+        )
+
+        if result.returncode == 0:
+            logging.debug(f"  Formatted: {c_file.name}")
+            return True
+        else:
+            logging.warning(f"clang-format failed for {c_file.name}: {result.stderr}")
+            return False
+
+    except (subprocess.TimeoutExpired, FileNotFoundError, OSError) as e:
+        logging.warning(f"Could not format {c_file.name}: {e}")
+        return False
+
+
+def decompile_with_retdec(binary_path: Path) -> bool:
+    """Decompile a binary using RetDec.
+
+    Args:
+        binary_path: Path to binary to decompile
+
+    Returns:
+        True if decompilation succeeded, False otherwise
+    """
+    # Create output directory structure matching Ghidra
+    output_dir = RETDEC_OUTPUT_PATH / binary_path.stem
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    output_file = output_dir / f"{binary_path.stem}.c"
+
+    with LOG_FILE.open("a", encoding="utf-8") as log:
+        log.write(f"\n{'=' * 80}\n")
+        log.write(f"RetDec Decompiling: {binary_path.name}\n")
+        log.write(f"{'-' * 80}\n")
+        log.flush()
+
+        cmd = [
+            "timeout",
+            f"{TIMEOUT_SECONDS}s",
+            str(RETDEC_DECOMPILER),
+            str(binary_path),
+            "--cleanup",
+            "--backend-var-renamer",
+            "hungarian",
+            "--backend-keep-library-funcs",
+            "-k",
+            "-o",
+            str(output_file),
+        ]
+
+        try:
+            with subprocess.Popen(
+                cmd,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+                bufsize=1,
+            ) as process:
+                # Stream output line by line
+                if process.stdout:
+                    for line in process.stdout:
+                        log.write(line)
+                        log.flush()
+
+                returncode = process.wait()
+
+            log.write(f"\nReturn code: {returncode}\n")
+            log.flush()
+
+            if returncode != 0:
+                logging.error(
+                    f"RetDec failed to decompile {binary_path.name} (code {returncode})"
+                )
+            else:
+                logging.info(f"  RetDec output: {output_file}")
+                # Format the generated C file
+                format_c_file(output_file)
+
+            return returncode == 0
+
+        except (subprocess.TimeoutExpired, OSError) as e:
+            log.write(f"\nError: {e}\n")
+            log.flush()
+            logging.error(
+                f"Exception while decompiling {binary_path.name} with RetDec: {e}"
+            )
+            return False
+
+
 def process_files(
     files: list[Path], label: str, *, decompile: bool = False, analyze: bool = True
 ) -> tuple[int, int]:
@@ -601,13 +720,16 @@ def print_summary(
     logging.info("=" * 60)
     logging.info("SUMMARY")
     logging.info("=" * 60)
-    logging.info(f"Libraries:   {lib_imported}/{lib_count} imported")
-    logging.info(f"Executables: {stats.executables_done}/{exe_count} decompiled")
-    logging.info(f"Failed:      {stats.total_failed}")
-    logging.info(f"Project:     {PROJECT_DIR / PROJECT_NAME}")
-    logging.info(f"Output:      {OUTPUT_PATH}")
-    logging.info(f"Log:         {LOG_FILE}")
-    logging.info(f"Completed:   {datetime.now().isoformat()}")
+    logging.info(f"Libraries:       {lib_imported}/{lib_count} imported")
+    logging.info(f"Ghidra:          {stats.executables_done}/{exe_count} decompiled")
+    logging.info(f"RetDec:          {stats.retdec_done}/{exe_count} decompiled")
+    logging.info(f"Ghidra Failed:   {stats.executables_failed}")
+    logging.info(f"RetDec Failed:   {stats.retdec_failed}")
+    logging.info(f"Project:         {PROJECT_DIR / PROJECT_NAME}")
+    logging.info(f"Ghidra Output:   {OUTPUT_PATH}")
+    logging.info(f"RetDec Output:   {RETDEC_OUTPUT_PATH}")
+    logging.info(f"Log:             {LOG_FILE}")
+    logging.info(f"Completed:       {datetime.now().isoformat()}")
     logging.info("=" * 60)
 
 
@@ -617,7 +739,8 @@ def main() -> int:
     For each Bitmain binary:
     1. Resolve all library dependencies (direct + transitive)
     2. Import only the new dependencies not yet imported
-    3. Decompile the binary
+    3. Decompile the binary with Ghidra
+    4. Decompile the binary with RetDec
 
     Returns:
         Exit code (0 for success, 1 for failure)
@@ -625,20 +748,27 @@ def main() -> int:
     setup_logging()
 
     logging.info("=" * 60)
-    logging.info("Automated Decompilation")
+    logging.info("Automated Decompilation (Ghidra + RetDec)")
     logging.info("=" * 60)
     logging.info(f"Started: {datetime.now().isoformat()}")
     logging.info(f"Using Ghidra: {GHIDRA_PATH}")
+    logging.info(f"Using RetDec: {RETDEC_PATH}")
     logging.info(f"Project: {PROJECT_DIR / PROJECT_NAME}")
 
     try:
         # Create necessary directories
         OUTPUT_PATH.mkdir(parents=True, exist_ok=True)
+        RETDEC_OUTPUT_PATH.mkdir(parents=True, exist_ok=True)
         PROJECT_DIR.mkdir(parents=True, exist_ok=True)
 
         # Validate Ghidra installation
         if not ANALYZE_HEADLESS.exists():
             logging.error(f"Ghidra analyzeHeadless not found: {ANALYZE_HEADLESS}")
+            return 1
+
+        # Validate RetDec installation
+        if not RETDEC_DECOMPILER.exists():
+            logging.error(f"RetDec decompiler not found: {RETDEC_DECOMPILER}")
             return 1
 
         # Create library copies with SONAME for linking
@@ -654,6 +784,7 @@ def main() -> int:
 
         # Process each executable: import dependencies, then decompile
         exe_ok = exe_fail = 0
+        retdec_ok = retdec_fail = 0
         total = len(executables)
 
         for i, exe_path in enumerate(executables, 1):
@@ -685,15 +816,25 @@ def main() -> int:
             else:
                 logging.info("  All dependencies already imported")
 
-            # Decompile the executable
-            logging.info(f"  Decompiling {exe_path.name}...")
+            # Decompile the executable with Ghidra
+            logging.info(f"  Decompiling with Ghidra: {exe_path.name}...")
             if import_to_ghidra(exe_path, decompile=True):
                 exe_ok += 1
+                # Format the generated C file
+                ghidra_output = OUTPUT_PATH / f"{exe_path.stem}.c"
+                format_c_file(ghidra_output)
             else:
                 exe_fail += 1
 
+            # Decompile the executable with RetDec
+            logging.info(f"  Decompiling with RetDec: {exe_path.name}...")
+            if decompile_with_retdec(exe_path):
+                retdec_ok += 1
+            else:
+                retdec_fail += 1
+
         # Print summary
-        stats = DecompileStats(exe_ok, exe_fail)
+        stats = DecompileStats(exe_ok, exe_fail, retdec_ok, retdec_fail)
         print_summary(stats, lib_import_ok, lib_import_ok + lib_import_fail, total)
 
         return 0 if stats.total_failed == 0 else 1
