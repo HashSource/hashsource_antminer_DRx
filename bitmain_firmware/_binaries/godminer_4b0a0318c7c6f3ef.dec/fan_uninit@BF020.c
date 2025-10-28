@@ -1,0 +1,4 @@
+void fan_uninit()
+{
+  ;
+}

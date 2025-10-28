@@ -1,0 +1,46 @@
+int __fastcall get_work_mode_rvn(int a1)
+{
+  _DWORD *v2; // r8
+  int v3; // r1
+  char *v4; // r11
+  int v5; // r0
+  int v6; // r9
+  char *v7; // r6
+  char *v8; // r4
+  int v9; // lr
+  int v10; // r12
+  int v11; // r1
+  char v13[4100]; // [sp+10h] [bp-1004h] BYREF
+
+  V_LOCK();
+  logfmt_raw(v13, 0x1000u, 0, 1391692, "get_work_mode_rvn");
+  LOWORD(v2) = -12376;
+  V_UNLOCK();
+  HIWORD(v2) = (unsigned int)&unk_18C750 >> 16;
+  LOWORD(v3) = -30960;
+  HIWORD(v3) = (unsigned int)"f1d304538f55a2595ec9fd64fe3c70b2e579f1490e8eb12ec48a70ee501bf2930097045d377c49bb1c0e655a091dc7c79d5c133ad1d7144019a1f460d1e5d49bab6304856cb540073d8cf3af0773bc7c065a702b887933e7151ff49cec6ce4944c1f04a96035d0965fef04d7d744a67aeccb544a7610909ba9406ec1f748b4bd328404c4de9eefc1093f302f8f6bfd00674432cf9f65dfea05237ccf453023f68213055397e181e5a9fbb544d422ae4a081c3d2acae97ce1cb514b832b214216aa7b05956f136d0e734a8d27727133d13da8d3b123a9baf3b4fb5269bfe51f307e4e056fcd2ebd21f3b43fa9fe06971ca50435ffde75a2be1ee2ee5dae1243c447efde4e543daf963dbea12fbb9d1707e8c07a9e3e03b75bb663eacacae3dc1f043bef3ae4e823ea64e48e919d5848c85590c035580b4db4e98543ddc3c3a4165c86c8399ba01a5e966c1c627ae9dff4aa8190fdb60544eac6be771edd4bca9c12d5e777ec8538b5a488470d9828029106e28686b0cb8b56745364a17f0cf29f70b1d8c83f500dd7c8b57fb772c83e77481b68e4c578c3a11e1dd937302d3fd1da60cd406c85d4845e866451746895394912c851a8b84eddf42356e6dbccdc582de589e03aa396771b661fbd854365b3400d6fe3434ed512083a36ee6943018127e3disable_cores" >> 16;
+  zlog(*v2, v3, 171, "get_work_mode_rvn", 17, 281, 0x14u, v13);
+  v4 = (char *)malloc(0x300u);
+  v5 = sub_9313C(a1, 255, 28, v4);
+  if ( v5 > 0 )
+  {
+    LOWORD(v6) = -30960;
+    v7 = &v4[12 * v5];
+    v8 = v4;
+    do
+    {
+      V_LOCK();
+      v9 = *(_DWORD *)v8;
+      v10 = (unsigned __int8)v8[4];
+      v11 = *((unsigned __int16 *)v8 + 3);
+      v8 += 12;
+      logfmt_raw(v13, 0x1000u, 0, 1391708, v10, (unsigned __int8)*(v8 - 4), v11, v9);
+      V_UNLOCK();
+      HIWORD(v6) = (unsigned int)"f1d304538f55a2595ec9fd64fe3c70b2e579f1490e8eb12ec48a70ee501bf2930097045d377c49bb1c0e655a091dc7c79d5c133ad1d7144019a1f460d1e5d49bab6304856cb540073d8cf3af0773bc7c065a702b887933e7151ff49cec6ce4944c1f04a96035d0965fef04d7d744a67aeccb544a7610909ba9406ec1f748b4bd328404c4de9eefc1093f302f8f6bfd00674432cf9f65dfea05237ccf453023f68213055397e181e5a9fbb544d422ae4a081c3d2acae97ce1cb514b832b214216aa7b05956f136d0e734a8d27727133d13da8d3b123a9baf3b4fb5269bfe51f307e4e056fcd2ebd21f3b43fa9fe06971ca50435ffde75a2be1ee2ee5dae1243c447efde4e543daf963dbea12fbb9d1707e8c07a9e3e03b75bb663eacacae3dc1f043bef3ae4e823ea64e48e919d5848c85590c035580b4db4e98543ddc3c3a4165c86c8399ba01a5e966c1c627ae9dff4aa8190fdb60544eac6be771edd4bca9c12d5e777ec8538b5a488470d9828029106e28686b0cb8b56745364a17f0cf29f70b1d8c83f500dd7c8b57fb772c83e77481b68e4c578c3a11e1dd937302d3fd1da60cd406c85d4845e866451746895394912c851a8b84eddf42356e6dbccdc582de589e03aa396771b661fbd854365b3400d6fe3434ed512083a36ee6943018127e3disable_cores" >> 16;
+      zlog(*v2, v6, 171, "get_work_mode_rvn", 17, 287, 20, v13);
+    }
+    while ( v8 != v7 );
+  }
+  free(v4);
+  return 0;
+}

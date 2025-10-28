@@ -1,0 +1,4 @@
+void fpga_reset()
+{
+  ;
+}

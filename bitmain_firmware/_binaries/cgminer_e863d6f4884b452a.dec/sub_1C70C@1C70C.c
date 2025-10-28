@@ -1,0 +1,10 @@
+void __fastcall __noreturn sub_1C70C(const char *a1, int a2)
+{
+  int *v4; // r0
+  char s[2052]; // [sp+10h] [bp-804h] BYREF
+
+  v4 = _errno_location();
+  snprintf(s, 0x800u, "WTF RWLOCK ERROR ON UNLOCK! errno=%d in %s %s():%d", *v4, "cgminer.c", a1, a2);
+  sub_343C4(3, s, 1);
+  sub_1B070(1, 1);
+}

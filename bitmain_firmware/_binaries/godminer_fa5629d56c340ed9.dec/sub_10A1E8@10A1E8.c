@@ -1,0 +1,41 @@
+_DWORD *__fastcall sub_10A1E8(_DWORD *result, int a2)
+{
+  result[34] = a2;
+  result[38] = a2;
+  result[42] = a2;
+  result[46] = a2;
+  result[50] = a2;
+  result[54] = a2;
+  result[58] = a2;
+  result[62] = a2;
+  result[37] = 0;
+  result[36] = 0;
+  result[35] = 0;
+  result[41] = 0;
+  result[40] = 0;
+  result[39] = 0;
+  result[45] = 0;
+  result[44] = 0;
+  result[43] = 0;
+  result[49] = 0;
+  result[48] = 0;
+  result[47] = 0;
+  result[53] = 0;
+  result[52] = 0;
+  result[51] = 0;
+  result[57] = 0;
+  result[56] = 0;
+  result[55] = 0;
+  result[61] = 0;
+  result[60] = 0;
+  result[59] = 0;
+  result[65] = 0;
+  result[64] = 0;
+  result[63] = 0;
+  result[32] = 0;
+  result[69] = 0;
+  result[68] = 0;
+  result[67] = 0;
+  result[66] = 0;
+  return result;
+}

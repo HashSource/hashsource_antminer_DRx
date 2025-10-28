@@ -1,0 +1,13 @@
+int __fastcall sub_56F1C(FILE *a1)
+{
+  int result; // r0
+  int *v2; // r0
+
+  result = fclose(a1);
+  if ( result )
+  {
+    v2 = _errno_location();
+    return sub_598C0(*v2);
+  }
+  return result;
+}

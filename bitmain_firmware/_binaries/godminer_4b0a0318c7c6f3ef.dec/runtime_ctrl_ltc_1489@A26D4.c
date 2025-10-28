@@ -1,0 +1,212 @@
+void *runtime_ctrl_ltc_1489()
+{
+  _DWORD *v0; // r5
+  int v1; // r9
+  int v2; // r3
+  int v3; // r11
+  unsigned int v4; // r6
+  unsigned int v5; // lr
+  unsigned int v6; // r12
+  __int64 v7; // r0
+  unsigned int v8; // r2
+  unsigned int v9; // r3
+  int v10; // r7
+  __int64 v11; // r0
+  void *v12; // r6
+  int v13; // r3
+  _QWORD v15[148]; // [sp+10h] [bp-14A4h] BYREF
+  char v16[4100]; // [sp+4B0h] [bp-1004h] BYREF
+
+  LOWORD(v0) = 20532;
+  LOWORD(v1) = 1576;
+  V_LOCK();
+  LOWORD(v2) = 3428;
+  HIWORD(v2) = (unsigned int)" get check bist results less than expect num(%d < %d)" >> 16;
+  LOWORD(v3) = 2556;
+  logfmt_raw(v16, 0x1000u, 0, v2);
+  HIWORD(v0) = (unsigned int)&g_fan_zc >> 16;
+  HIWORD(v3) = (unsigned int)"ltc" >> 16;
+  V_UNLOCK();
+  HIWORD(v1) = (unsigned int)"_ltc_1489" >> 16;
+  zlog(*v0, v3, 171, v1 + 948, 21, 957, 40, v16);
+  LOWORD(v4) = -6124;
+  memset(v15, 0, sizeof(v15));
+  LOWORD(v5) = -13480;
+  LOWORD(v6) = -12912;
+  HIWORD(v5) = (unsigned int)&loc_CCE68 >> 16;
+  LOWORD(v7) = -12812;
+  WORD2(v7) = -12796;
+  LODWORD(v15[0]) = v5;
+  HIWORD(v6) = (unsigned int)&loc_CD0A0 >> 16;
+  WORD1(v7) = (unsigned int)&loc_CD104 >> 16;
+  HIWORD(v7) = (unsigned int)&loc_CD114 >> 16;
+  LOWORD(v8) = -12760;
+  LOWORD(v9) = -14212;
+  LOWORD(v5) = -14252;
+  HIDWORD(v15[0]) = v6;
+  HIWORD(v8) = (unsigned int)&loc_CD138 >> 16;
+  LODWORD(v15[2]) = v7;
+  HIWORD(v9) = (unsigned int)&loc_CCB8C >> 16;
+  v15[3] = __PAIR64__(v8, HIDWORD(v7));
+  HIWORD(v5) = (unsigned int)&loc_CCB64 >> 16;
+  LOWORD(v6) = -13524;
+  LOWORD(v7) = -13496;
+  WORD2(v7) = 5456;
+  HIDWORD(v15[4]) = v9;
+  HIWORD(v6) = (unsigned int)&loc_CCE3C >> 16;
+  v15[5] = __PAIR64__(v6, v5);
+  WORD1(v7) = (unsigned int)&loc_CCE58 >> 16;
+  HIWORD(v7) = (unsigned int)&loc_A1860 >> 16;
+  LOWORD(v8) = 4196;
+  LOWORD(v9) = 7344;
+  LOWORD(v5) = 4824;
+  HIWORD(v8) = (unsigned int)&loc_A1374 >> 16;
+  LODWORD(v15[6]) = v7;
+  HIWORD(v4) = (unsigned int)&loc_9EB24 >> 16;
+  HIDWORD(v15[7]) = HIDWORD(v7);
+  HIWORD(v9) = (unsigned int)&loc_A1FC0 >> 16;
+  LOWORD(v6) = -6192;
+  LOWORD(v7) = -6144;
+  WORD2(v7) = 4820;
+  v15[8] = __PAIR64__(v4, v8);
+  LODWORD(v15[9]) = v9;
+  HIWORD(v7) = (unsigned int)&loc_A15E4 >> 16;
+  HIWORD(v5) = (unsigned int)&loc_A15E8 >> 16;
+  HIDWORD(v15[9]) = v5;
+  LOWORD(v8) = 2800;
+  LOWORD(v4) = 2516;
+  LOWORD(v9) = -4920;
+  LOWORD(v5) = -6344;
+  HIWORD(v6) = (unsigned int)&loc_9EAE0 >> 16;
+  LODWORD(v15[10]) = v6;
+  WORD1(v7) = (unsigned int)&loc_9EB10 >> 16;
+  *(_QWORD *)((char *)&v15[10] + 4) = v7;
+  HIWORD(v8) = (unsigned int)&loc_A0E00 >> 16;
+  HIWORD(v4) = (unsigned int)&loc_A0CE4 >> 16;
+  HIWORD(v9) = (unsigned int)&loc_9EFD8 >> 16;
+  HIWORD(v5) = (unsigned int)&loc_9EA48 >> 16;
+  LOWORD(v6) = -6336;
+  LOWORD(v7) = 1792;
+  WORD2(v7) = -1348;
+  HIDWORD(v15[11]) = v8;
+  v15[12] = __PAIR64__(v9, v4);
+  HIWORD(v6) = (unsigned int)&loc_9EA50 >> 16;
+  WORD1(v7) = (unsigned int)&loc_A0A10 >> 16;
+  v15[13] = __PAIR64__(v6, v5);
+  HIWORD(v7) = (unsigned int)&loc_9FDCC >> 16;
+  LOWORD(v8) = 812;
+  LOWORD(v4) = 772;
+  LOWORD(v9) = -6328;
+  LOWORD(v5) = -6320;
+  HIWORD(v8) = (unsigned int)&loc_A063C >> 16;
+  v15[14] = v7;
+  HIWORD(v4) = (unsigned int)&loc_A0614 >> 16;
+  HIWORD(v9) = (unsigned int)&loc_9EA58 >> 16;
+  HIWORD(v5) = (unsigned int)&loc_9EA60 >> 16;
+  LOWORD(v6) = -6220;
+  LOWORD(v7) = 7932;
+  WORD2(v7) = -6212;
+  v15[15] = __PAIR64__(v4, v8);
+  HIWORD(v6) = (unsigned int)&loc_9EAC4 >> 16;
+  WORD1(v7) = (unsigned int)&loc_A220C >> 16;
+  HIDWORD(v15[16]) = v9;
+  HIWORD(v7) = (unsigned int)&loc_9EACC >> 16;
+  v15[17] = __PAIR64__(v6, v5);
+  LOWORD(v10) = -14640;
+  LOWORD(v8) = -1324;
+  LOWORD(v4) = 8872;
+  LOWORD(v9) = 8488;
+  LOWORD(v5) = 7164;
+  HIWORD(v10) = (unsigned int)&loc_CC9E0 >> 16;
+  v15[18] = v7;
+  HIWORD(v8) = (unsigned int)&loc_9FDE4 >> 16;
+  HIWORD(v4) = (unsigned int)&loc_A25B8 >> 16;
+  HIWORD(v9) = (unsigned int)&loc_A2438 >> 16;
+  HIWORD(v5) = (unsigned int)&loc_A1F0C >> 16;
+  LOWORD(v6) = -6208;
+  LOWORD(v7) = 9932;
+  WORD2(v7) = -6200;
+  LODWORD(v15[4]) = v10;
+  HIWORD(v6) = (unsigned int)&loc_9EAD0 >> 16;
+  v15[19] = __PAIR64__(v4, v8);
+  WORD1(v7) = (unsigned int)&loc_A29DC >> 16;
+  v15[20] = __PAIR64__(v5, v9);
+  HIWORD(v7) = (unsigned int)&loc_9EAD8 >> 16;
+  LOWORD(v8) = 6848;
+  LOWORD(v9) = -14228;
+  LOWORD(v5) = -14220;
+  LODWORD(v15[21]) = v6;
+  *(_QWORD *)((char *)&v15[21] + 4) = v7;
+  HIWORD(v8) = (unsigned int)&loc_A1DD0 >> 16;
+  HIWORD(v9) = (unsigned int)&loc_CCB7C >> 16;
+  HIWORD(v5) = (unsigned int)&loc_CCB84 >> 16;
+  LOWORD(v6) = 4132;
+  LOWORD(v7) = -4896;
+  WORD2(v7) = 9476;
+  HIDWORD(v15[23]) = v8;
+  v15[24] = __PAIR64__(v9, 655160);
+  HIWORD(v6) = (unsigned int)&loc_A1334 >> 16;
+  WORD1(v7) = (unsigned int)&loc_9EFF0 >> 16;
+  LODWORD(v15[25]) = v5;
+  HIWORD(v7) = (unsigned int)&loc_A2814 >> 16;
+  LOWORD(v8) = 9252;
+  LOWORD(v4) = -12452;
+  LOWORD(v9) = -12244;
+  LOWORD(v5) = 11412;
+  LODWORD(v15[26]) = v6;
+  HIWORD(v8) = (unsigned int)&loc_A2734 >> 16;
+  v15[27] = v7;
+  HIWORD(v4) = (unsigned int)&loc_CD26C >> 16;
+  HIWORD(v9) = (unsigned int)&loc_CD33C >> 16;
+  HIWORD(v5) = (unsigned int)&locret_A2FA4 >> 16;
+  LOWORD(v6) = 13284;
+  LOWORD(v7) = 11952;
+  WORD2(v7) = 11976;
+  HIDWORD(v15[28]) = v8;
+  HIDWORD(v15[33]) = v4;
+  v15[34] = __PAIR64__(v5, v9);
+  LOWORD(v8) = 12488;
+  LOWORD(v9) = 12212;
+  HIWORD(v6) = (unsigned int)&loc_A36F4 >> 16;
+  LODWORD(v15[36]) = v6;
+  HIWORD(v9) = (unsigned int)&loc_A32C4 >> 16;
+  WORD1(v7) = (unsigned int)&loc_A31C0 >> 16;
+  HIWORD(v7) = (unsigned int)&loc_A31D8 >> 16;
+  *(_QWORD *)((char *)&v15[36] + 4) = v7;
+  LODWORD(v15[40]) = 14156;
+  LODWORD(v15[42]) = 6517868;
+  v15[43] = 0x100001489LL;
+  HIWORD(v8) = (unsigned int)&loc_A33D8 >> 16;
+  HIDWORD(v15[39]) = v8;
+  v15[44] = 0x7500000078LL;
+  LODWORD(v15[35]) = v9;
+  HIDWORD(v15[35]) = v9;
+  HIDWORD(v15[46]) = 2;
+  v15[45] = 0x8000003A8LL;
+  v11 = *(_QWORD *)(v1 + 972);
+  LODWORD(v15[108]) = 8;
+  *(_QWORD *)((char *)&v15[48] + 4) = v11;
+  HIDWORD(v15[55]) = 2;
+  HIDWORD(v15[67]) = 2;
+  HIDWORD(v15[50]) = sensor_info_ltc_1489;
+  v15[51] = qword_193AF0;
+  v15[52] = qword_193AF8;
+  LODWORD(v15[128]) = 1;
+  v15[124] = 0x44D1600042480000LL;
+  v15[53] = qword_193B00;
+  LODWORD(v15[56]) = 27;
+  HIDWORD(v15[105]) = 216;
+  v15[107] = 0x900000056LL;
+  v15[127] = 949793;
+  LODWORD(v15[125]) = 1500;
+  v15[106] = 0x400000070LL;
+  v12 = calloc(1u, 0x4A0u);
+  memcpy(v12, v15, 0x4A0u);
+  V_LOCK();
+  LOWORD(v13) = 3452;
+  HIWORD(v13) = (unsigned int)"less than expect num(%d < %d)" >> 16;
+  logfmt_raw(v16, 0x1000u, 0, v13);
+  V_UNLOCK();
+  zlog(*v0, v3, 171, "runtime_ctrl_ltc_1489", 21, 1064, 40, v16);
+  return v12;
+}
